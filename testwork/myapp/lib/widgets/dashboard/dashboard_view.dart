@@ -127,23 +127,9 @@ class _StatChip extends StatelessWidget {
                 child: Icon(icon, color: accentColor, size: 22),
               ),
               if (isWater)
-                GestureDetector(
-                  onTap: onActionPressed,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: accentColor,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: accentColor.withOpacity(0.3),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(Icons.add, color: Colors.white, size: 20),
-                  ),
+                _WaterAddButton(
+                  accentColor: accentColor,
+                  onPressed: onActionPressed,
                 )
               else if (progress != null)
                 Stack(
@@ -214,6 +200,55 @@ class _StatChip extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _WaterAddButton extends StatefulWidget {
+  const _WaterAddButton({
+    required this.accentColor,
+    this.onPressed,
+  });
+
+  final Color accentColor;
+  final VoidCallback? onPressed;
+
+  @override
+  State<_WaterAddButton> createState() => _WaterAddButtonState();
+}
+
+class _WaterAddButtonState extends State<_WaterAddButton> {
+  bool _pressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _pressed = true),
+      onTapUp: (_) => setState(() => _pressed = false),
+      onTapCancel: () => setState(() => _pressed = false),
+      onTap: widget.onPressed,
+      child: AnimatedScale(
+        scale: _pressed ? 0.9 : 1.0,
+        duration: const Duration(milliseconds: 120),
+        curve: Curves.easeOut,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 120),
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: widget.accentColor,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color:
+                    widget.accentColor.withOpacity(_pressed ? 0.18 : 0.3),
+                blurRadius: _pressed ? 6 : 8,
+                offset: Offset(0, _pressed ? 2 : 4),
+              ),
+            ],
+          ),
+          child: const Icon(Icons.add, color: Colors.white, size: 20),
+        ),
       ),
     );
   }

@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../widgets/bottom_menu.dart';
 import '../widgets/header_card.dart';
 import '../widgets/section_placeholder.dart';
 import '../widgets/dashboard/dashboard_view.dart';
+import 'scan/scan_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,9 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
 
   final List<TabData> _tabs = const [
-    TabData('Главная', Icons.spa_rounded),
-    TabData('Скан', Icons.qr_code_scanner_rounded),
-    TabData('Профиль', Icons.person_rounded),
+    TabData('Р“Р»Р°РІРЅР°СЏ', Icons.spa_rounded),
+    TabData('РЎРєР°РЅ', Icons.qr_code_scanner_rounded),
+    TabData('Планировщик', Icons.calendar_month_rounded),
   ];
 
   @override
@@ -60,7 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomMenu(
                 index: _index,
                 tabs: _tabs,
-                onSelect: (value) => setState(() => _index = value),
+                onSelect: (value) {
+                  if (value == 1) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const ScanScreen(),
+                      ),
+                    );
+                    return;
+                  }
+                  setState(() => _index = value);
+                },
               ),
               const SizedBox(height: 16),
             ],
@@ -70,3 +81,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+

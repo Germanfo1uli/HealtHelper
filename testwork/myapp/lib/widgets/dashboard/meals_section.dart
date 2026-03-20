@@ -70,6 +70,9 @@ class _MealCard extends StatelessWidget {
     final color = isDone
         ? const Color(0xFF2E7D32)
         : const Color(0xFF2F3B34).withOpacity(0.4);
+    final hintColor = isDone
+        ? const Color(0xFF2E7D32).withOpacity(0.7)
+        : const Color(0xFF2F3B34).withOpacity(0.35);
 
     return Container(
       padding: const EdgeInsets.all(18),
@@ -171,8 +174,25 @@ class _MealCard extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(width: 10),
+          _TapHint(color: hintColor),
         ],
       ),
+    );
+  }
+}
+
+class _TapHint extends StatelessWidget {
+  const _TapHint({required this.color});
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      Icons.chevron_right_rounded,
+      color: color,
+      size: 22,
     );
   }
 }
