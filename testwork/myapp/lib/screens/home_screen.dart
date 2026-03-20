@@ -5,6 +5,7 @@ import '../widgets/header_card.dart';
 import '../widgets/section_placeholder.dart';
 import '../widgets/dashboard/dashboard_view.dart';
 import 'scan/scan_screen.dart';
+import 'planner/planner_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const SizedBox(height: 24),
-              if (_index != 0) ...[
+              if (_index != 0 && _index != 2) ...[
                 HeaderCard(title: tab.title),
                 const SizedBox(height: 20),
               ],
@@ -50,11 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   switchOutCurve: Curves.easeIn,
                   child: _index == 0
                       ? const DashboardView(key: ValueKey('dashboard'))
-                      : SectionPlaceholder(
-                          key: ValueKey(tab.title),
-                          icon: tab.icon,
-                          title: tab.title,
-                        ),
+                      : _index == 2
+                          ? const PlannerScreen(key: ValueKey('planner'))
+                          : SectionPlaceholder(
+                              key: ValueKey(tab.title),
+                              icon: tab.icon,
+                              title: tab.title,
+                            ),
                 ),
               ),
               const SizedBox(height: 12),
