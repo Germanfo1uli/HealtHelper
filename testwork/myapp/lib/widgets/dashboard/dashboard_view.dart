@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'day_progress_card.dart';
 import 'meals_section.dart';
 import 'profile_header.dart';
@@ -51,20 +51,21 @@ class _QuickStatsRow extends StatelessWidget {
             unit: 'стаканов',
             icon: Icons.water_drop_rounded,
             accentColor: const Color(0xFF42A5F5),
-            isWater: true,
+            showAddButton: true,
             onActionPressed: () {},
           ),
         ),
         const SizedBox(width: 16),
-        const Expanded(
+        Expanded(
           child: _StatChip(
-            title: 'Шаги',
-            value: '6 240',
-            total: '',
-            unit: 'из 10 000',
-            icon: Icons.directions_walk_rounded,
-            progress: 0.624,
-            accentColor: Color(0xFF2E7D32),
+            title: 'Сон',
+            value: '6 ч 20 м',
+            total: '/ 8 ч',
+            unit: 'сна',
+            icon: Icons.bedtime_rounded,
+            accentColor: const Color(0xFF7E57C2),
+            showAddButton: true,
+            onActionPressed: () {},
           ),
         ),
       ],
@@ -81,7 +82,7 @@ class _StatChip extends StatelessWidget {
     required this.icon,
     this.progress,
     required this.accentColor,
-    this.isWater = false,
+    this.showAddButton = false,
     this.onActionPressed,
   });
 
@@ -92,7 +93,7 @@ class _StatChip extends StatelessWidget {
   final IconData icon;
   final double? progress;
   final Color accentColor;
-  final bool isWater;
+  final bool showAddButton;
   final VoidCallback? onActionPressed;
 
   @override
@@ -126,7 +127,7 @@ class _StatChip extends StatelessWidget {
                 ),
                 child: Icon(icon, color: accentColor, size: 22),
               ),
-              if (isWater)
+              if (showAddButton)
                 _WaterAddButton(
                   accentColor: accentColor,
                   onPressed: onActionPressed,
@@ -162,34 +163,38 @@ class _StatChip extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Text(
-                    value,
-                    style: const TextStyle(
-                      color: Color(0xFF2F3B34),
-                      fontSize: 22,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                  if (total.isNotEmpty)
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
                     Text(
-                      total,
-                      style: TextStyle(
-                        color: const Color(0xFF2F3B34).withOpacity(0.5),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                      value,
+                      style: const TextStyle(
+                        color: Color(0xFF2F3B34),
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.5,
                       ),
                     ),
-                ],
+                    if (total.isNotEmpty)
+                      Text(
+                        total,
+                        style: TextStyle(
+                          color: const Color(0xFF2F3B34).withOpacity(0.5),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                  ],
+                ),
               ),
               const SizedBox(height: 4),
               Text(
                 '$title • $unit',
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: const Color(0xFF2F3B34).withOpacity(0.6),
@@ -253,3 +258,8 @@ class _WaterAddButtonState extends State<_WaterAddButton> {
     );
   }
 }
+
+
+
+
+

@@ -6,6 +6,7 @@ import '../../widgets/planner/day_total_bar.dart';
 import '../../widgets/planner/meal_section.dart';
 import '../../widgets/planner/quick_start_card.dart';
 import '../../widgets/planner/shopping_tabs.dart';
+import '../../widgets/planner/stats_tab.dart';
 
 class PlannerScreen extends StatefulWidget {
   const PlannerScreen({super.key});
@@ -163,7 +164,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Column(
         children: [
           const TabBar(
@@ -171,8 +172,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
             unselectedLabelColor: Color(0xFF7A8B80),
             indicatorColor: Color(0xFF2E7D32),
             tabs: [
-              Tab(text: 'План питания'),
-              Tab(text: 'Список покупок'),
+              Tab(text: 'План'),
+              Tab(text: 'Покупки'),
+              Tab(text: 'Статистика'),
             ],
           ),
           Expanded(
@@ -217,6 +219,15 @@ class _PlannerScreenState extends State<PlannerScreen> {
                     setState(() => _cartItems.removeWhere((item) => item.isBought));
                   },
                   onAddAll: () => _addAllToCart(_autoShoppingItems()),
+                ),
+                StatsTab(
+                  heightCm: 176,
+                  weightKg: 72,
+                  protein: 110,
+                  fat: 65,
+                  carbs: 210,
+                  todayCalories: _calcTotalCalories(),
+                  yesterdayCalories: 1680,
                 ),
               ],
             ),
